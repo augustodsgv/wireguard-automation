@@ -39,18 +39,18 @@ class Server:
     # Gets the server interface string
     def interface_str(self)->str:
         server_str = textwrap.dedent(f"""
+                [Interface]
+                SaveConfig = true
+                Address = {self.address}
+                PrivateKey = {self.priv_key}
+                ListenPort = {self.port}
+                
                 PostUp = ufw route allow in on wg0 out on {self.nic}
                 PostUp = iptables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
                 PostUp = ip6tables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
                 PreDown = ufw route delete allow in on wg0 out on {self.nic}
                 PreDown = iptables -t nat -D POSTROUTING -o {self.nic} -j MASQUERADE
                 PreDown = ip6tables -t nat -D POSTROUTING -o {self.nic} -j MASQUERADE
-                                     
-                [Interface]
-                SaveConfig = true
-                Address = {self.address}
-                PrivateKey = {self.priv_key}
-                ListenPort = {self.port}
                 """)
             
         return server_str
