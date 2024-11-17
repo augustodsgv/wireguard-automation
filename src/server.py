@@ -3,22 +3,22 @@ import textwrap
 class Server:
     def __init__(
             self,
+            name : str,
             address : str,
             endpoint : str,
             port : int,
             nic : str,
             priv_key : str,
             pub_key : str | None = None,
-            server_name : str | None = None
             ):
         
+        self.name = name
         self.address = address
         self.endpoint = endpoint
         self.port = port
         self.nic = nic
         self.priv_key = priv_key
         self.pub_key = pub_key
-        self.server_name = server_name
         self.client_list = {}
 
         # TODO: generating new priv_keys and pub keys from it
@@ -39,7 +39,6 @@ class Server:
     # Gets the server interface string
     def interface_str(self)->str:
         server_str = textwrap.dedent(f"""
-                SaveConfig = true
                 PostUp = ufw route allow in on wg0 out on {self.nic}
                 PostUp = iptables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
                 PostUp = ip6tables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
@@ -48,6 +47,7 @@ class Server:
                 PreDown = ip6tables -t nat -D POSTROUTING -o {self.nic} -j MASQUERADE
                                      
                 [Interface]
+                SaveConfig = true
                 Address = {self.address}
                 PrivateKey = {self.priv_key}
                 ListenPort = {self.port}
@@ -60,6 +60,6 @@ class Server:
         server_str = textwrap.dedent(f"""
                 [Peer]
                 PublicKey = {self.pub_key}
-                Endpoint = {self.endpoint}
+                Endpoint = {self.endpoint}:{self.port}
                 """)
         return server_str

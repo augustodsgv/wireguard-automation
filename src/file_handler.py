@@ -6,7 +6,7 @@ class FileHandler:
     @classmethod
     def write_server_file(cls, server : Server, file_name : str | None = None)->None:
         if file_name is None:
-            file_name = f'/etc/wireguard/{server.server_name}.conf'
+            file_name = f'/etc/wireguard/{server.name}.conf'
         with open(file_name, 'w+') as f:
             f.write(server.interface_str())
             for id, client in server.client_list.items():
