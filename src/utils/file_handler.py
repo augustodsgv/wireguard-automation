@@ -1,5 +1,5 @@
-from src.server import Server
-from src.client import Client
+from src.data_models.server import Server
+from src.data_models.client import Client
 
 class FileHandler:
     # Writes a server .conf file

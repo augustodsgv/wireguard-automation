@@ -1,9 +1,10 @@
-from src.client import Client
+from src.data_models.client import Client
 import textwrap
 class Server:
     def __init__(
             self,
             name : str,
+            id : str,
             address : str,
             endpoint : str,
             port : int,
@@ -13,6 +14,7 @@ class Server:
             ):
         
         self.name = name
+        self.id = id
         self.address = address
         self.endpoint = endpoint
         self.port = port

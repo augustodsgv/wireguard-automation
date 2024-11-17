@@ -1,5 +1,5 @@
 import subprocess
-from src.server import Server
+from src.data_models.server import Server
 
 class WgMiddleware:
     @classmethod
@@ -8,7 +8,7 @@ class WgMiddleware:
 
     @classmethod
     def disable_server(cls, server : Server):
-        subprocess.call(f'wg-quick down{server.name}', shell=True)
+        subprocess.call(f'wg-quick down {server.name}', shell=True)
 
     @classmethod
     def refresh_server(cls, server : Server):
