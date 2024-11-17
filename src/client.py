@@ -18,7 +18,7 @@ class Client:
         server_str = textwrap.dedent(f"""
                 [Interface]
                 PrivateKey = {self.priv_key}
-                AllowedIPs = {self.priv_ip}
+                Address = {self.priv_ip}
                 """)
         return server_str
 
@@ -26,6 +26,6 @@ class Client:
         server_str = textwrap.dedent(f"""
                 [Peer]
                 PublicKey = {self.pub_key}
-                Address = {self.priv_ip}
+                AllowedIPs = {self.priv_ip}
                 """)
         return server_str

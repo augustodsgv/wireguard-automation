@@ -44,7 +44,7 @@ class Server:
                 Address = {self.address}
                 PrivateKey = {self.priv_key}
                 ListenPort = {self.port}
-                
+
                 PostUp = ufw route allow in on wg0 out on {self.nic}
                 PostUp = iptables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
                 PostUp = ip6tables -t nat -I POSTROUTING -o {self.nic} -j MASQUERADE
