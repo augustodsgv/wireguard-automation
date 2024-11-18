@@ -1,18 +1,25 @@
 import textwrap
+from src.data_models.key import Key
 
 class Client:
     def __init__(
             self,
-            id : str,
+            name : str,
             priv_ip : str,
             ips_to_route : str,
             priv_key : str | None = None,
-            pub_key : str | None = None):
-        self.id = id
+            id : str | None = None,
+            ):
+        self.name = name
         self.priv_ip = priv_ip
         self.ips_to_route = ips_to_route
-        self.priv_key = priv_key
-        self.pub_key = pub_key
+        self.id = id
+
+        if priv_key is None:
+            self.priv_key = Key.gen_private_key()
+        else:
+            self.priv_key = priv_key
+        self.pub_key = Key.gen_public_key(self.priv_key)
 
     def interface_str(self)->str:
         server_str = textwrap.dedent(f"""
@@ -26,6 +33,6 @@ class Client:
         server_str = textwrap.dedent(f"""
                 [Peer]
                 PublicKey = {self.pub_key}
-                AllowedIPs = {self.priv_ip}
+                AllowedIPs = {self.priv_ip}/32
                 """)
         return server_str

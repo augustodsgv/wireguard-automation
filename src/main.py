@@ -1,7 +1,7 @@
-from src.server import Server
-from src.client import Client
-from src.file_handler import FileHandler
-from src.wg_middleware import WgMiddleware
+from src.data_models.server import Server
+from src.data_models.client import Client
+from src.utils.file_handler import FileHandler
+from src.utils.wg_middleware import WgMiddleware
 s = Server(name='wg0',
            address='10.0.0.1/24',
            endpoint='192.168.0.2',
