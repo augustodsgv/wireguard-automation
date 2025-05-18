@@ -1,0 +1,5 @@
+*.tfvar
+*terraform.*
+*.terraform*
+*.tfvars
+inventory.yaml
